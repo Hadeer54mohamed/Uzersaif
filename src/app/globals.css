@@ -1,26 +1,272 @@
 @import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 :root {
   --background: #ffffff;
-  --foreground: #171717;
+  --foreground: #fcf8f8;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
+  --color-background: hsl(var(--background));
+  --color-foreground: hsl(var(--foreground));
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+  
+  /* Custom Colors */
+  --color-off-white: hsl(var(--off-white));
+  --color-primary: hsl(var(--primary));
+  --color-primary-dark: hsl(var(--primary-dark));
+  --color-titles-brown: hsl(var(--titles-brown));
+  
+  /* Border, Input, Ring colors - using HSL variables */
+  --color-border: hsl(var(--border));
+  --color-input: hsl(var(--input));
+  --color-ring: hsl(var(--ring));
+  
+  /* Card colors */
+  --color-card: hsl(var(--card));
+  --color-card-foreground: hsl(var(--card-foreground));
+  
+  /* Muted colors */
+  --color-muted: hsl(var(--muted));
+  --color-muted-foreground: hsl(var(--muted-foreground));
+  
+  /* Secondary colors */
+  --color-secondary: hsl(var(--secondary));
+  --color-secondary-foreground: hsl(var(--secondary-foreground));
+  
+  /* Accent colors */
+  --color-accent: hsl(var(--accent));
+  --color-accent-foreground: hsl(var(--accent-foreground));
+  
+  /* Destructive colors */
+  --color-destructive: hsl(var(--destructive));
+  --color-destructive-foreground: hsl(var(--destructive-foreground));
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
+
 
 body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+}
+
+
+/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
+All colors MUST be HSL.
+*/
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 0 99% 0%;
+    
+    --off-white: 30 100% 98%;
+    
+    --card: 0 0% 100%;
+    --card-foreground: 0 99% 0%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 99% 0%;
+
+    --primary: 22 99% 50%;
+    --primary-foreground: 0 0% 100%;
+    
+    --primary-dark: 30 100% 55%;
+    --titles-brown: 10 100% 21%;
+
+    --secondary: 30 100% 98%;
+    --secondary-foreground: 10 100% 21%;
+
+    --muted: 30 100% 98%;
+    --muted-foreground: 10 20% 45%;
+
+    --accent: 22 99% 50%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 30 30% 90%;
+    --input: 30 30% 90%;
+    --ring: 22 99% 50%;
+
+    --radius: 0.75rem;
+    
+    --gradient-hero: linear-gradient(135deg, hsl(22 99% 50%), hsl(30 100% 55%));
+    --gradient-overlay: linear-gradient(180deg, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.1) 100%);
+    
+    --shadow-elegant: 0 10px 40px -10px hsl(22 99% 50% / 0.2);
+    --shadow-card: 0 4px 20px -2px hsl(0 0% 0% / 0.1);
+    
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 0 99% 0%;
+    --sidebar-primary: 22 99% 50%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 30 100% 98%;
+    --sidebar-accent-foreground: 10 100% 21%;
+    --sidebar-border: 30 30% 90%;
+    --sidebar-ring: 22 99% 50%;
+  }
+
+  .dark {
+    --background: 10 100% 21%;
+    --foreground: 0 0% 100%;
+
+    --card: 10 80% 15%;
+    --card-foreground: 0 0% 100%;
+
+    --popover: 10 80% 15%;
+    --popover-foreground: 0 0% 100%;
+
+    --primary: 22 99% 50%;
+    --primary-foreground: 0 0% 100%;
+    
+    --primary-dark: 30 100% 55%;
+    --titles-brown: 30 100% 98%;
+
+    --secondary: 10 60% 25%;
+    --secondary-foreground: 0 0% 100%;
+
+    --muted: 10 60% 25%;
+    --muted-foreground: 30 20% 70%;
+
+    --accent: 22 99% 50%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 10 40% 30%;
+    --input: 10 40% 30%;
+    --ring: 22 99% 50%;
+    
+    --sidebar-background: 10 80% 12%;
+    --sidebar-foreground: 0 0% 100%;
+    --sidebar-primary: 22 99% 50%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 10 60% 20%;
+    --sidebar-accent-foreground: 0 0% 100%;
+    --sidebar-border: 10 40% 25%;
+    --sidebar-ring: 22 99% 50%;
+  }
+}
+
+@layer base {
+  * {
+    border-color: hsl(var(--border));
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    @apply text-titles-brown;
+    font-weight: 700;
+  }
+  
+  .dark h1, .dark h2, .dark h3, .dark h4, .dark h5, .dark h6 {
+    @apply text-[hsl(var(--titles-brown))];
+  }
+}
+
+@layer utilities {
+  .gradient-hero {
+    background: var(--gradient-hero);
+  }
+  
+  .gradient-overlay {
+    background: var(--gradient-overlay);
+  }
+  
+  .shadow-elegant {
+    box-shadow: var(--shadow-elegant);
+  }
+  
+  .shadow-card {
+    box-shadow: var(--shadow-card);
+  }
+  
+  .transition-smooth {
+    transition: var(--transition-smooth);
+  }
+  
+  .animate-float {
+    animation: float 6s ease-in-out infinite;
+  }
+  
+  .animate-slide-up {
+    animation: slideUp 0.6s ease-out;
+  }
+  
+  .animate-fade-in-up {
+    animation: fadeInUp 0.8s ease-out;
+  }
+  
+  .animate-fade-in {
+    animation: fadeIn 0.4s ease-out;
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  @keyframes float {
+    0%, 100% {
+      transform: translateY(0px);
+    }
+    50% {
+      transform: translateY(-20px);
+    }
+  }
+  
+  @keyframes slideUp {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}
+@keyframes section-title-appear {
+  0% {
+    opacity: 0;
+    transform: translateY(18px) scale(.98);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.animate-section-title {
+  animation: section-title-appear .7s cubic-bezier(.25,.1,.25,1) both;
 }
