@@ -11,7 +11,8 @@ const testimonials = [
     trip: "الأقصر وأسوان",
     rating: 5,
     comment: "تجربة رائعة! الرحلة كانت منظمة بشكل ممتاز وكل التفاصيل كانت مثالية. أنصح الجميع بالتعامل مع Uzersaif",
-    avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Ahmed"
+    avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Fatima"
+
   },
   {
     id: 2,
@@ -21,7 +22,8 @@ const testimonials = [
     trip: "الغردقة والبحر الأحمر",
     rating: 5,
     comment: "أفضل شركة سياحية تعاملت معها. الخدمة ممتازة والأسعار تنافسية جداً. شكراً لفريق العمل الرائع!",
-    avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Fatima"
+    avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Ahmed"
+
   },
   {
     id: 3,
