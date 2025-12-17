@@ -1,7 +1,0 @@
-{
-  "name": "sanity-temp",
-  "private": true,
-  "dependencies": {
-    "sanity": "^3.99.0"
-  }
-}

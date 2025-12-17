@@ -6,7 +6,8 @@ import { MapPin, Clock, Star } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { client, urlFor } from "@/lib/sanityClient";
+import { client } from "@/sanity/lib/client";
+import { urlFor } from "@/sanity/lib/image";
 
 export default function TripsSection() {
   const [trips, setTrips] = useState([]);
