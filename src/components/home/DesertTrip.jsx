@@ -1,7 +1,8 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { client, urlFor } from "@/lib/sanityClient";
+import { client } from "@/sanity/lib/client";
+import { urlFor } from "@/sanity/lib/image";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Accordion,
