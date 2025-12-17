@@ -11,7 +11,7 @@ import Footer from "../components/layout/Footer";
 const Home = () => {
   return (
     <div className="min-h-screen">
-      <Navbar />
+     <Navbar transparent />
       <Hero />
       <FeaturedTrips />
       <WhyChooseUs />

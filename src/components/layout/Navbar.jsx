@@ -6,7 +6,7 @@ import { Menu, X } from "lucide-react";
 import { NavLink } from "../NavLink";
 import { Button } from "../ui/button";
 
-const Navbar = () => {
+const Navbar = ({ transparent = false }) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
@@ -27,11 +27,14 @@ const Navbar = () => {
 
   return (
     <nav
-      className={`fixed top-0 right-0 left-0 z-50 transition-all duration-300 ${
-        isScrolled
-          ? "bg-white text-black shadow-lg backdrop-blur-md"
-          : "bg-transparent text-white"
-      }`}
+    className={`fixed top-0 right-0 left-0 z-50 transition-all duration-300 ${
+      isScrolled
+        ? "bg-white text-black shadow-lg backdrop-blur-md"
+        : transparent
+        ? "bg-transparent text-white"
+        : "bg-white text-black shadow-sm"
+    }`}
+    
     >
       <div className="flex items-center justify-between h-20 px-4 md:px-8">
         {/* Logo */}
@@ -54,7 +57,17 @@ const Navbar = () => {
             <NavLink
               key={link.href}
               href={link.href}
-              className="relative text-foreground/80 hover:text-primary font-medium transition-all after:absolute after:bottom-0 after:right-0 after:h-[2px] after:w-0 after:bg-primary after:transition-all hover:after:w-full hover:after:left-0"
+              className={`relative font-medium transition-all
+                ${
+                  isScrolled || !transparent
+                    ? "text-foreground/80 hover:text-primary"
+                    : "text-white/90 hover:text-white"
+                }
+                after:absolute after:bottom-0 after:right-0 after:h-[2px]
+                after:w-0 after:bg-primary after:transition-all
+                hover:after:w-full hover:after:left-0
+              `}
+
               activeClassName="text-primary after:w-full"
             >
               {link.label}

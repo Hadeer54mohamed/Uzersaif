@@ -7,6 +7,11 @@ const nextConfig = {
         hostname: 'api.dicebear.com',
         pathname: '/**',
       },
+      {
+        protocol: 'https',
+        hostname: 'cdn.sanity.io',
+        pathname: '/**',
+      },
     ],
     // زيادة timeout للصور الخارجية
     minimumCacheTTL: 60,
