@@ -50,13 +50,14 @@ const Contact = () => {
       {/* Hero Section */}
       <section className="relative h-[50vh] flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0">
-          <Image
-            src="/hero-travel.jpg"
-            alt="Contact Uzersaif"
-            fill
-            className="object-cover"
-            priority
-          />
+        <video
+          src="/uzer.mp4"
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="w-full h-full object-cover transition-transform duration-700 hover:scale-105"
+        />
           <div className="absolute inset-0 bg-gradient-to-b from-black/70 to-black/40" />
         </div>
 

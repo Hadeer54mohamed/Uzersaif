@@ -3,7 +3,7 @@
 import { Button } from "../ui/button";
 import { MapPin, Calendar, Tent } from "lucide-react";
 import { motion, useMotionValue, useTransform } from "framer-motion";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 // Stats animation
 const statVariants = {
@@ -39,12 +39,20 @@ const Hero = () => {
   const heroRef = useRef(null);
   const y = useMotionValue(0);
   const yTransform = useTransform(y, [0, 300], [0, -45]);
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => y.set(window.scrollY / 3);
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, [y]);
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
 
   return (
     <section
@@ -56,13 +64,29 @@ const Hero = () => {
         style={{ y: yTransform }}
         className="absolute inset-0 w-full h-full overflow-hidden will-change-transform"
       >
-        <img
-          src="/hero-travel.jpg"
-          alt="الصحراء البيضاء"
-          loading="eager"
-          fetchPriority="high"
-          className="w-full h-full object-cover transition-transform duration-700 hover:scale-105"
-        />
+        {/* Desktop Video - Only renders on desktop */}
+        {!isMobile && (
+          <video
+            src="/uzer.mp4"
+            autoPlay
+            loop
+            muted
+            playsInline
+            className="w-full h-full object-cover transition-transform duration-700 hover:scale-105"
+          />
+        )}
+        
+        {/* Mobile Video - Only renders on mobile */}
+        {isMobile && (
+          <video
+            src="/mob.mp4"
+            autoPlay
+            loop
+            muted
+            playsInline
+            className="w-full h-full object-cover transition-transform duration-700 hover:scale-105"
+          />
+        )}
         {/* Improved contrast */}
         <div className="absolute inset-0 bg-black/50 md:bg-black/40" />
       </motion.div>

@@ -82,7 +82,7 @@ const Navbar = ({ transparent = false }) => {
         {/* Mobile Menu Button */}
         <Button
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-          className="md:hidden text-foreground p-2 rounded-lg hover:bg-primary/10 transition-all"
+          className="md:hidden text-black p-2 rounded-lg hover:bg-primary/10 transition-all"
         >
           {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
         </Button>
@@ -97,7 +97,7 @@ const Navbar = ({ transparent = false }) => {
   }}
 >
   <div
-    className={`py-4 space-y-4 px-4 bg-white/95 shadow-lg rounded-b-2xl transform transition-transform duration-500 ${
+    className={`py-4 space-y-4 px-4 bg-white shadow-lg rounded-b-2xl transform transition-transform duration-500 ${
       isMobileMenuOpen ? "translate-y-0" : "-translate-y-10"
     }`}
   >
@@ -106,7 +106,7 @@ const Navbar = ({ transparent = false }) => {
         key={link.href}
         href={link.href}
         onClick={() => setIsMobileMenuOpen(false)}
-        className="block text-foreground/80 hover:text-primary font-medium transition-colors py-2 px-2 rounded-lg"
+        className="block text-black hover:text-primary font-medium transition-colors py-2 px-2 rounded-lg"
         activeClassName="text-primary"
       >
         {link.label}
