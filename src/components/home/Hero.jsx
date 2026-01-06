@@ -1,39 +1,53 @@
 "use client";
 
 import { Button } from "../ui/button";
-import { MapPin, Calendar, Tent } from "lucide-react";
+import { MapPin, Calendar, Tent, Users  } from "lucide-react";
 import { motion, useMotionValue, useTransform } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 
 // Stats animation
 const statVariants = {
   hidden: { opacity: 0, y: 25 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.45, ease: "easeOut" } },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.45, ease: "easeOut" },
+  },
 };
 
 const Hero = () => {
   const stats = [
     {
-      icon: <Calendar className="w-10 h-10 text-gradient-primary mx-auto mb-3" />,
-      value: "3 أيام",
-      label: "مدة الرحلة",
-      description:
-        "استمتع برحلة تمتد لثلاثة أيام وسط تكوينات الصحراء البيضاء وسحر الطبيعة.",
-    },
-    {
-      icon: <MapPin className="w-10 h-10 text-gradient-secondary mx-auto mb-3" />,
-      value: "وجهة واحدة",
-      label: "الصحراء البيضاء",
-      description:
-        "وجهة ساحرة تجمع بين التكوينات الطبيعية الفريدة والكثبان الرملية.",
-    },
-    {
       icon: <Tent className="w-10 h-10 text-gradient-primary mx-auto mb-3" />,
-      value: "تخييم ليلي",
-      label: "تجربة بدوية",
+      value: "Real Deep Experience",
+      label: "تجربة محسوبة",
       description:
-        "عِش تجربة التخييم واستمتع بمشاهدة السماء ليلاً بعيدًا عن أضواء المدينة.",
+        "برنامج مدروس بالساعة يخليك تعيش الصحراء بعمق حقيقي من غير عشوائية ولا إجهاد.",
     },
+    {
+      icon: (
+        <Calendar className="w-10 h-10 text-gradient-secondary mx-auto mb-3" />
+      ),
+      value: "26 سنة خبرة",
+      label: "تنظيم بدوي",
+      description:
+        "خبرة طويلة وتنفيذ مئات الرحلات الناجحة بضمانات واضحة وأسلوب احترافي.",
+    },
+    {
+      icon: <MapPin className="w-10 h-10 text-gradient-primary mx-auto mb-3" />,
+      value: "Adventure مختلفة",
+      label: "لناس شبهك",
+      description:
+        "تجربة نادرة وآمنة للي زهق من الرحلات التقليدية ويدوّر على معنى حقيقي.",
+    },
+    {
+      icon: <Users className="w-10 h-10 text-gradient-secondary mx-auto mb-3" />,
+      value: "Adventure Meaningful",
+      label: "تجربة معمولة ليك",
+      description:
+        "سواء مسافر لوحدك، مع شريك حياتك، أو مع ناس بتقدّر الهدوء والتجارب اللي ليها معنى حقيقي.",
+    },
+    
   ];
 
   const heroRef = useRef(null);
@@ -56,40 +70,48 @@ const Hero = () => {
 
   return (
     <section
-      ref={heroRef}
-      className="relative min-h-[110vh] md:min-h-screen flex flex-col items-center justify-center overflow-hidden pt-32 pb-20"
-    >
+    ref={heroRef}
+    className="relative bg-black flex flex-col items-center justify-start overflow-hidden pt-20 pb-24"
+  >
+  
+  
+  
       {/* Background with Parallax */}
       <motion.div
-        style={{ y: yTransform }}
-        className="absolute inset-0 w-full h-full overflow-hidden will-change-transform"
-      >
-        {/* Desktop Video - Only renders on desktop */}
-        {!isMobile && (
-          <video
-            src="/uzer.mp4"
-            autoPlay
-            loop
-            muted
-            playsInline
-            className="w-full h-full object-cover transition-transform duration-700 hover:scale-105"
-          />
-        )}
-        
-        {/* Mobile Video - Only renders on mobile */}
-        {isMobile && (
-          <video
-            src="/mob.mp4"
-            autoPlay
-            loop
-            muted
-            playsInline
-            className="w-full h-full object-cover transition-transform duration-700 hover:scale-105"
-          />
-        )}
-        {/* Improved contrast */}
-        <div className="absolute inset-0 bg-black/50 md:bg-black/40" />
-      </motion.div>
+  style={{ y: yTransform }}
+  className="absolute inset-0 w-full h-full pointer-events-none overflow-hidden"
+>
+
+  {/* Desktop Video */}
+  {!isMobile && (
+   <video
+   src="/uzer.mp4"
+   autoPlay
+   loop
+   muted
+   playsInline
+   className="absolute inset-0 w-full h-full object-cover block"
+ />
+ 
+ 
+  )}
+
+  {/* Mobile Video */}
+  {isMobile && (
+    <video
+      src="/mob.mp4"
+      autoPlay
+      loop
+      muted
+      playsInline
+      className="absolute inset-0 w-full h-full object-cover block"
+    />
+  )}
+
+  {/* Overlay */}
+  <div className="absolute inset-0 bg-black/50 md:bg-black/40" />
+</motion.div>
+
 
       {/* Content */}
       <div className="relative z-10 container mx-auto px-4 text-center">
@@ -101,7 +123,7 @@ const Hero = () => {
           className="flex flex-col items-center space-y-4"
         >
           <h1
-            className="text-[clamp(2rem,5vw,6rem)] font-bold text-white mb-2 drop-shadow-lg bg-clip-text text-transparent bg-gradient-to-r from-primary to-primary-dark"
+            className="text-[clamp(1.6rem,4.2vw,4.2rem)] font-bold text-white mb-2 drop-shadow-lg bg-clip-text text-transparent bg-gradient-to-r from-primary to-primary-dark"
             dir="rtl"
           >
             اكتشف سحر مصر مع{" "}
@@ -110,15 +132,20 @@ const Hero = () => {
             </span>
           </h1>
 
-          <h2 className="text-[clamp(1.1rem,4vw,3rem)] font-semibold text-white/95 drop-shadow-xl">
-            رحلة خاصة إلى الصحراء البيضاء – مغامرة لا تُنسى
+          <h2 className="text-[clamp(0.95rem,3.2vw,2.4rem)] font-semibold text-white/95 drop-shadow-xl">
+            تقدر تسيب الدنيا… وتطلع تعيش{" "}
+            <span className="text-primary">3 أيام</span> على كوكب تاني
+            <br />
+             وانت متأكد إنك {" "}
+             <span className="text-primary">مش هتندم؟</span>
           </h2>
         </motion.div>
 
         {/* Paragraph */}
-        <p className="text-[clamp(1rem,2.4vw,1.5rem)] text-white/90 mt-4 mb-10 max-w-2xl mx-auto leading-relaxed drop-shadow">
-          استكشف التكوينات البيضاء الساحرة، الكثبان الذهبية، والواحات الخضراء،
-          واستمتع بتجربة بدوية أصيلة تحت سماء مليئة بالنجوم.
+        <p className="text-[clamp(0.85rem,1.9vw,1.15rem)] text-white/90 mt-4 mb-10 max-w-2xl mx-auto leading-relaxed drop-shadow">
+          تجربة سفر متكاملة بتجمع إحساس الفضاء وجمال الصحراء البيضاء، بتنظيم
+          بدوي بخبرة <span className="text-primary font-semibold">26 سنة</span>
+          تديك مغامرة مختلفة وآمنة فعلًا.
         </p>
 
         {/* CTA Buttons */}
@@ -153,7 +180,7 @@ const Hero = () => {
         </div>
 
         {/* Stats */}
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-4xl mx-auto px-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto px-4">
           {stats.map((stat, i) => (
             <motion.div
               key={i}
@@ -162,12 +189,27 @@ const Hero = () => {
               whileInView="visible"
               viewport={{ once: true, amount: 0.25 }}
               transition={{ delay: i * 0.15 }}
-              className="rounded-2xl p-6 bg-white/10 backdrop-blur-xl shadow-xl hover:scale-105  transition-all text-center"
+              className="group relative rounded-3xl p-8 bg-gradient-to-br from-white/15 to-white/5 backdrop-blur-2xl border border-white/20 shadow-2xl hover:shadow-primary/30 hover:scale-105 hover:border-primary/50 transition-all duration-500 text-center overflow-hidden"
             >
-              {stat.icon}
-              <h3 className="text-3xl font-extrabold text-white">{stat.value}</h3>
-              <p className="text-white/90 font-semibold mb-1">{stat.label}</p>
-              <p className="text-white/75 text-sm leading-relaxed">{stat.description}</p>
+              {/* Background gradient effect on hover */}
+              <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-3xl" />
+              
+              {/* Content */}
+              <div className="relative z-10">
+                <div className="mb-4 transform group-hover:scale-110 transition-transform duration-300">
+                  {stat.icon}
+                </div>
+                <h3 className="text-lg md:text-2xl font-extrabold text-white mb-3 drop-shadow-lg">
+                  {stat.value}
+                </h3>
+                <p className="text-white/95 font-bold mb-2 text-sm md:text-base">{stat.label}</p>
+                <p className="text-white/80 text-xs md:text-sm leading-relaxed">
+                  {stat.description}
+                </p>
+              </div>
+
+              {/* Bottom accent line */}
+              <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-primary via-primary-dark to-primary transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500" />
             </motion.div>
           ))}
         </div>
