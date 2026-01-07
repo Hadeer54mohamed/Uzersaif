@@ -7,24 +7,24 @@ import { Button } from "../ui/button";
 const guaranteeItems = [
  {
   icon: (
-    <Stamp className="w-10 h-10 text-primary mx-auto mb-4 rotate-[-8deg]" />
+    <Stamp className="w-7 h-7 text-primary rotate-[-8deg]" />
   ),
   title: "ختم بدو واحة الفرافرة",
   desc: "مش شرط مكتوب… ده عهد وكلمة شرف بدوية قدّامك.",
 },
 
   {
-    icon: <Clock className="w-10 h-10 text-primary mx-auto mb-4" />,
+    icon: <Clock className="w-7 h-7 text-primary" />,
     title: "إحترام الوقت والعقل والمال",
     desc: "ده لقوة صدق كلمتنا، واحترامًا ليك كضيف، ولمالك، ولعقلك.",
   },
   {
-    icon: <Wallet className="w-10 h-10 text-primary mx-auto mb-4" />,
+    icon: <Wallet className="w-7 h-7 text-primary" />,
     title: "فلوسك في أمان",
     desc: "تسترد فلوسك كاملة بدون نقاش لو لغّيت قبل موعد الرحلة بـ 7 أيام.",
   },
   {
-    icon: <HeartHandshake className="w-10 h-10 text-primary mx-auto mb-4" />,
+    icon: <HeartHandshake className="w-7 h-7 text-primary" />,
     title: "راحتك مسؤوليتنا",
     desc: "أثناء الرحلة، راحتك أولويتنا في حدود احترام المحمية وروح التجربة.",
   },
@@ -54,7 +54,7 @@ export default function Guarantee() {
         </motion.div>
 
         {/* Cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           {guaranteeItems.map((item, i) => (
             <motion.div
               key={i}
@@ -63,19 +63,25 @@ export default function Guarantee() {
               viewport={{ once: true, amount: 0.3 }}
               transition={{ delay: i * 0.15, duration: 0.45 }}
               className="
-                rounded-2xl p-6 text-center
+                rounded-2xl p-4
                 bg-white/10 backdrop-blur-xl
                 shadow-xl hover:scale-105
                 transition-all
               "
             >
-              {item.icon}
-              <h3 className="text-xl font-bold text-white mb-2">
-                {item.title}
-              </h3>
-              <p className="text-white/80 text-sm leading-relaxed">
-                {item.desc}
-              </p>
+              <div className="flex items-start gap-3">
+                <div className="flex-shrink-0">
+                  {item.icon}
+                </div>
+                <div className="flex-1 min-w-0">
+                  <h3 className="text-base md:text-lg font-bold text-white mb-1">
+                    {item.title}
+                  </h3>
+                  <p className="text-white/80 text-xs md:text-sm leading-relaxed">
+                    {item.desc}
+                  </p>
+                </div>
+              </div>
             </motion.div>
           ))}
         </div>

@@ -18,7 +18,7 @@ const statVariants = {
 const Hero = () => {
   const stats = [
     {
-      icon: <Tent className="w-10 h-10 text-gradient-primary mx-auto mb-3" />,
+      icon: <Tent className="w-8 h-8 text-gradient-primary" />,
       value: "Real Deep Experience",
       label: "تجربة محسوبة",
       description:
@@ -26,7 +26,7 @@ const Hero = () => {
     },
     {
       icon: (
-        <Calendar className="w-10 h-10 text-gradient-secondary mx-auto mb-3" />
+        <Calendar className="w-8 h-8 text-gradient-secondary" />
       ),
       value: "26 سنة خبرة",
       label: "تنظيم بدوي",
@@ -34,14 +34,14 @@ const Hero = () => {
         "خبرة طويلة وتنفيذ مئات الرحلات الناجحة بضمانات واضحة وأسلوب احترافي.",
     },
     {
-      icon: <MapPin className="w-10 h-10 text-gradient-primary mx-auto mb-3" />,
+      icon: <MapPin className="w-8 h-8 text-gradient-primary" />,
       value: "Adventure مختلفة",
       label: "لناس شبهك",
       description:
         "تجربة نادرة وآمنة للي زهق من الرحلات التقليدية ويدوّر على معنى حقيقي.",
     },
     {
-      icon: <Users className="w-10 h-10 text-gradient-secondary mx-auto mb-3" />,
+      icon: <Users className="w-8 h-8 text-gradient-secondary" />,
       value: "Adventure Meaningful",
       label: "تجربة معمولة ليك",
       description:
@@ -180,7 +180,7 @@ const Hero = () => {
         </div>
 
         {/* Stats */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto px-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 max-w-6xl mx-auto px-4">
           {stats.map((stat, i) => (
             <motion.div
               key={i}
@@ -189,23 +189,25 @@ const Hero = () => {
               whileInView="visible"
               viewport={{ once: true, amount: 0.25 }}
               transition={{ delay: i * 0.15 }}
-              className="group relative rounded-3xl p-8 bg-gradient-to-br from-white/15 to-white/5 backdrop-blur-2xl border border-white/20 shadow-2xl hover:shadow-primary/30 hover:scale-105 hover:border-primary/50 transition-all duration-500 text-center overflow-hidden"
+              className="group relative rounded-2xl p-4 bg-gradient-to-br from-white/15 to-white/5 backdrop-blur-2xl border border-white/20 shadow-2xl hover:shadow-primary/30 hover:scale-105 hover:border-primary/50 transition-all duration-500 overflow-hidden"
             >
               {/* Background gradient effect on hover */}
-              <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-3xl" />
+              <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl" />
               
               {/* Content */}
-              <div className="relative z-10">
-                <div className="mb-4 transform group-hover:scale-110 transition-transform duration-300">
+              <div className="relative z-10 flex items-start gap-3">
+                <div className="flex-shrink-0 transform group-hover:scale-110 transition-transform duration-300">
                   {stat.icon}
                 </div>
-                <h3 className="text-lg md:text-2xl font-extrabold text-white mb-3 drop-shadow-lg">
-                  {stat.value}
-                </h3>
-                <p className="text-white/95 font-bold mb-2 text-sm md:text-base">{stat.label}</p>
-                <p className="text-white/80 text-xs md:text-sm leading-relaxed">
-                  {stat.description}
-                </p>
+                <div className="flex-1 min-w-0">
+                  <h3 className="text-base md:text-lg font-extrabold text-white mb-1 drop-shadow-lg">
+                    {stat.value}
+                  </h3>
+                  <p className="text-white/95 font-bold mb-1 text-xs md:text-sm">{stat.label}</p>
+                  <p className="text-white/80 text-xs leading-relaxed">
+                    {stat.description}
+                  </p>
+                </div>
               </div>
 
               {/* Bottom accent line */}

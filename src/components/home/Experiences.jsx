@@ -124,7 +124,7 @@ export default function Experiences() {
         </motion.div>
 
         {/* Cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 md:gap-6 max-w-7xl mx-auto">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 max-w-7xl mx-auto">
           {values.map((item, i) => {
             const Icon = item.icon;
             return (
@@ -134,22 +134,24 @@ export default function Experiences() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, amount: 0.15 }}
                 transition={{ delay: i * 0.05, duration: 0.5 }}
-                className="group rounded-xl sm:rounded-2xl p-5 sm:p-6 bg-[#FFFFFF] shadow-md hover:shadow-xl md:hover:scale-[1.02] transition-all duration-300 border border-transparent hover:border-[#FE5F01]/20"
+                className="group rounded-xl p-4 bg-[#FFFFFF] shadow-md hover:shadow-xl md:hover:scale-[1.02] transition-all duration-300 border border-transparent hover:border-[#FE5F01]/20"
               >
-                <div className="flex justify-center mb-3 sm:mb-4">
-                  <div className="transform md:group-hover:scale-110 transition-transform duration-300">
-                    <Icon className={`w-7 h-7 sm:w-8 sm:h-8 ${item.color}`} />
+                <div className="flex items-start gap-3">
+                  <div className="flex-shrink-0 transform md:group-hover:scale-110 transition-transform duration-300">
+                    <Icon className={`w-6 h-6 sm:w-7 sm:h-7 ${item.color}`} />
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <h3 className="text-[clamp(0.95rem,2.5vw,1.1rem)] font-bold text-[#010101] mb-1.5 leading-snug">
+                      {item.title}
+                    </h3>
+                    <p className="text-[#6D1200] text-[clamp(0.75rem,1.8vw,0.85rem)] leading-relaxed mb-1.5">
+                      {item.desc}
+                    </p>
+                    <p className="text-[#FE5F01] text-[clamp(0.7rem,1.7vw,0.8rem)] leading-relaxed font-medium pt-1.5 border-t border-[#FE5F01]/10">
+                      {item.desc2}
+                    </p>
                   </div>
                 </div>
-                <h3 className="text-[clamp(1.05rem,2.8vw,1.25rem)] font-bold text-[#010101] mb-2 sm:mb-3 leading-snug text-center">
-                  {item.title}
-                </h3>
-                <p className="text-[#6D1200] text-[clamp(0.85rem,2vw,0.95rem)] leading-relaxed mb-2 text-center">
-                  {item.desc}
-                </p>
-                <p className="text-[#FE5F01] text-[clamp(0.8rem,1.9vw,0.9rem)] leading-relaxed text-center font-medium mt-2 pt-2 border-t border-[#FE5F01]/10">
-                  {item.desc2}
-                </p>
               </motion.div>
             );
           })}
