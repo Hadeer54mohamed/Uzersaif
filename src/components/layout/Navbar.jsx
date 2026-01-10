@@ -27,14 +27,9 @@ const Navbar = ({ transparent = false }) => {
 
   return (
     <nav
-    className={`fixed top-0 right-0 left-0 z-50 transition-all duration-300 ${
-      isScrolled
-        ? "bg-white text-black shadow-lg backdrop-blur-md"
-        : transparent
-        ? "bg-transparent text-white"
-        : "bg-white text-black shadow-sm"
-    }`}
-    
+      className={`fixed top-0 right-0 left-0 z-50 transition-all duration-300 ${
+        isScrolled ? 'navbar-scrolled' : transparent ? 'navbar-transparent' : 'navbar-scrolled'
+      }`}
     >
       <div className="flex items-center justify-between h-20 px-4 md:px-8">
         {/* Logo */}
@@ -57,24 +52,17 @@ const Navbar = ({ transparent = false }) => {
             <NavLink
               key={link.href}
               href={link.href}
-              className={`relative font-medium transition-all
-                ${
-                  isScrolled || !transparent
-                    ? "text-foreground/80 hover:text-primary"
-                    : "text-white/90 hover:text-white"
-                }
-                after:absolute after:bottom-0 after:right-0 after:h-[2px]
-                after:w-0 after:bg-primary after:transition-all
-                hover:after:w-full hover:after:left-0
-              `}
-
-              activeClassName="text-primary after:w-full"
+              className="relative font-medium transition-all nav-link"
+              activeClassName="nav-link-active"
             >
-              {link.label}
+              <span className="hover:text-fire transition-colors">
+                {link.label}
+              </span>
+              <span className="absolute bottom-0 right-0 h-[2px] w-0 transition-all hover:w-full hover:left-0 nav-link-underline" />
             </NavLink>
           ))}
 
-          <Button className="bg-gradient-to-r from-primary to-primary-dark px-6 py-2 rounded-xl shadow-md hover:shadow-lg transition-all hover:from-primary-dark hover:to-primary font-bold">
+          <Button className="px-6 py-2 rounded-xl shadow-md hover:shadow-lg transition-all font-bold btn-fire">
             احجز الآن
           </Button>
         </div>
@@ -82,7 +70,7 @@ const Navbar = ({ transparent = false }) => {
         {/* Mobile Menu Button */}
         <Button
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-          className="md:hidden text-black p-2 rounded-lg hover:bg-primary/10 transition-all"
+          className="md:hidden p-2 rounded-lg transition-all text-primary bg-transparent"
         >
           {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
         </Button>
@@ -90,37 +78,34 @@ const Navbar = ({ transparent = false }) => {
 
       {/* Mobile Menu */}
       <div
-  className={`md:hidden transition-all duration-500 ease-in-out overflow-hidden`}
-  style={{
-    maxHeight: isMobileMenuOpen ? "500px" : "0",
-    opacity: isMobileMenuOpen ? 1 : 0,
-  }}
->
-  <div
-    className={`py-4 space-y-4 px-4 bg-white shadow-lg rounded-b-2xl transform transition-transform duration-500 ${
-      isMobileMenuOpen ? "translate-y-0" : "-translate-y-10"
-    }`}
-  >
-    {navLinks.map((link) => (
-      <NavLink
-        key={link.href}
-        href={link.href}
-        onClick={() => setIsMobileMenuOpen(false)}
-        className="block text-black hover:text-primary font-medium transition-colors py-2 px-2 rounded-lg"
-        activeClassName="text-primary"
+        className={`md:hidden transition-all duration-500 ease-in-out overflow-hidden`}
+        style={{
+          maxHeight: isMobileMenuOpen ? "500px" : "0",
+          opacity: isMobileMenuOpen ? 1 : 0,
+        }}
       >
-        {link.label}
-      </NavLink>
-    ))}
+        <div
+          className={`py-4 space-y-4 px-4 rounded-b-2xl transform transition-transform duration-500 mobile-menu ${
+            isMobileMenuOpen ? "translate-y-0" : "-translate-y-10"
+          }`}
+        >
+          {navLinks.map((link) => (
+            <NavLink
+              key={link.href}
+              href={link.href}
+              onClick={() => setIsMobileMenuOpen(false)}
+              className="block font-medium transition-colors py-2 px-2 rounded-lg nav-link"
+              activeClassName="nav-link-active"
+            >
+              {link.label}
+            </NavLink>
+          ))}
 
-    <Button
-      className="w-full bg-gradient-to-r from-primary to-primary-dark py-3 rounded-xl shadow-md hover:from-primary-dark hover:to-primary font-bold transition-all"
-    >
-      احجز الآن
-    </Button>
-  </div>
-</div>
-
+          <Button className="w-full py-3 rounded-xl shadow-md font-bold transition-all btn-fire">
+            احجز الآن
+          </Button>
+        </div>
+      </div>
     </nav>
   );
 };

@@ -1,7 +1,14 @@
 "use client";
 
 import { HelpCircle, ChevronDown } from "lucide-react";
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
+import { motion } from "framer-motion";
+import {
+  StarParticle,
+  ShootingStar,
+  generateStars,
+  generateMeteors,
+} from "@/components/SpaceElements";
 
 const faqData = [
   {
@@ -61,61 +68,90 @@ const faqData = [
   },
 ];
 
-
 const FAQ = () => {
   const [openItem, setOpenItem] = useState(null);
+  const [stars, setStars] = useState([]);
+  const [meteors, setMeteors] = useState([]);
 
   const toggleItem = useCallback((id) => {
     setOpenItem((prev) => (prev === id ? null : id));
   }, []);
 
+  useEffect(() => {
+    setStars(generateStars(70));
+    setMeteors(generateMeteors(4));
+  }, []);
+
   return (
-    <section className="py-20 bg-muted/10">
-      <div className="max-w-6xl mx-auto px-4">
+    <section className="relative py-8 sm:py-10 md:py-12 overflow-hidden">
+      {/* 🌌 خلفية فضائية غامقة */}
+      <div className="absolute inset-0 bg-cosmic-space" />
+
+      {/* ✨ طبقة النجوم */}
+      <div className="absolute inset-0 pointer-events-none">
+        {stars.map((star) => (
+          <StarParticle key={star.id} star={star} />
+        ))}
+      </div>
+
+      {/* ☄️ طبقة الشهب */}
+      <div className="absolute inset-0 pointer-events-none">
+        {meteors.map((meteor) => (
+          <ShootingStar key={meteor.id} meteor={meteor} />
+        ))}
+      </div>
+
+      {/* توهج في الزوايا */}
+      <div className="absolute inset-0 pointer-events-none">
+        <div className="absolute top-20 right-20 w-56 h-56 rounded-full blur-3xl opacity-20 glow-purple" />
+        <div className="absolute bottom-20 left-20 w-64 h-64 rounded-full blur-3xl opacity-15 glow-fire" />
+      </div>
+      
+      <div className="relative z-10 max-w-6xl mx-auto px-4">
         {/* Section Header */}
-        <div className="text-center mb-12 animate-fade-in-up">
-          <div className="flex justify-center mb-4">
-            <div className="p-4 bg-primary/20 rounded-full">
-              <HelpCircle className="w-10 h-10 text-primary" />
+        <div className="text-center mb-6 sm:mb-8 animate-fade-in-up">
+          <div className="flex justify-center mb-3">
+            <div className="p-3 rounded-full bg-[#F47A1F30]">
+              <HelpCircle className="w-8 h-8 icon-fire" />
             </div>
           </div>
-          <h2 className="text-4xl md:text-5xl font-extrabold mb-4">
+          <h2 className="text-3xl md:text-4xl font-extrabold mb-2 sm:mb-3 text-primary">
             الأسئلة الشائعة
           </h2>
-          <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
+          <p className="text-base sm:text-lg max-w-2xl mx-auto text-secondary">
             إجابات على أكثر الأسئلة شيوعاً التي يطرحها عملاؤنا
           </p>
         </div>
 
         {/* FAQ Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4">
           {faqData.map((faq, index) => {
             const isOpen = openItem === faq.id;
             return (
               <div
                 key={faq.id}
-                className="bg-card rounded-3xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 text-center flex flex-col justify-center items-center animate-fade-in-up border border-border"
+                className="rounded-2xl p-4 sm:p-5 shadow-lg hover:shadow-2xl transition-all duration-300 text-center flex flex-col justify-center items-center animate-fade-in-up backdrop-blur-sm card-cosmic"
                 style={{ animationDelay: `${index * 100}ms` }}
               >
                 <button
                   onClick={() => toggleItem(faq.id)}
                   aria-expanded={isOpen}
-                  className="w-full flex justify-center items-center gap-3 text-xl font-bold text-primary transition-colors hover:text-primary/80"
+                  className="w-full flex justify-center items-center gap-2 text-lg sm:text-xl font-bold transition-colors faq-question"
                 >
                   {faq.question}
                   <ChevronDown
-                    className={`w-6 h-6 shrink-0 transition-transform duration-300 ${
+                    className={`w-5 h-5 shrink-0 transition-transform duration-300 ${
                       isOpen ? "rotate-180" : ""
                     }`}
                   />
                 </button>
                 <div
                   className={`grid transition-all duration-300 ease-in-out ${
-                    isOpen ? "grid-rows-[1fr] mt-4" : "grid-rows-[0fr]"
+                    isOpen ? "grid-rows-[1fr] mt-2 sm:mt-3" : "grid-rows-[0fr]"
                   }`}
                 >
                   <div className="overflow-hidden">
-                    <p className="text-muted-foreground text-base leading-relaxed">
+                    <p className="text-base leading-relaxed faq-answer">
                       {faq.answer}
                     </p>
                   </div>
@@ -127,13 +163,15 @@ const FAQ = () => {
 
         {/* Contact CTA */}
         <div
-          className="text-center mt-12 animate-fade-in-up"
+          className="text-center mt-6 sm:mt-8 animate-fade-in-up"
           style={{ animationDelay: "600ms" }}
         >
-          <p className="text-muted-foreground mb-4">لم تجد إجابة سؤالك؟</p>
+          <p className="mb-3 text-secondary">
+            لم تجد إجابة سؤالك؟
+          </p>
           <a
             href="/contact"
-            className="inline-flex items-center gap-2 bg-primary text-primary-foreground px-8 py-3 rounded-full font-semibold hover:bg-primary/90 transition-colors"
+            className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full font-semibold transition-all btn-fire"
           >
             تواصل معنا
           </a>
