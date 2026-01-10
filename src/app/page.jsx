@@ -13,6 +13,7 @@ import Experiences from "../components/home/Experiences";
 import BeforeBooking from "../components/home/BeforeBooking";
 import AssuranceSection from "../components/home/AssuranceSection";
 import SpaceshipIntro from "../components/SpaceshipIntro";
+import { motion } from "framer-motion";
 import {
   StarParticle,
   ShootingStar,
@@ -34,7 +35,13 @@ const Home = () => {
   useEffect(() => {
     if (!hasVisited) return;
     setStars(generateStars(120));
-    setMeteors(generateMeteors(8, { delayMultiplier: 3, baseRepeatDelay: 8, repeatDelayRange: 12 }));
+    setMeteors(
+      generateMeteors(8, {
+        delayMultiplier: 3,
+        baseRepeatDelay: 8,
+        repeatDelayRange: 12,
+      })
+    );
   }, [hasVisited]);
 
   return (
@@ -71,7 +78,17 @@ const Home = () => {
 
       <div className="min-h-screen relative z-10">
         <Navbar transparent />
-        <Hero />
+        
+        {showIntro && <SpaceshipIntro onComplete={() => setShowIntro(false)} />}
+
+        <motion.div
+          initial={{ opacity: 0, scale: 0.98 }}
+          animate={{ opacity: showIntro ? 0 : 1, scale: 1 }}
+          transition={{ duration: 1.2, ease: "easeOut" }}
+        >
+          <Hero />
+        </motion.div>
+
         <SectionDivider />
         <Guarantee />
         <SectionDivider />

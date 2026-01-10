@@ -80,7 +80,7 @@ const Hero = () => {
   return (
     <section
       ref={heroRef}
-      className="relative flex flex-col items-center justify-start overflow-hidden pt-16 pb-12"
+      className="relative flex flex-col items-center justify-start overflow-hidden pt-24 sm:pt-20 md:pt-16 pb-12"
     >
       {/* ✨ طبقة النجوم */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none z-[5]">
