@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
-import { MapPin, Clock, Star } from "lucide-react";
+import { MapPin, Clock, Star, Plane } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
@@ -91,24 +91,37 @@ export default function TripsSection() {
         {/* Empty State */}
         {!loading && trips.length === 0 && (
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="py-16 text-center text-muted"
+            initial={{ opacity: 0, y: 20, scale: 0.95 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+            className="py-16 text-center relative z-10"
           >
             <motion.div
-              animate={{ y: [0, -8, 0] }}
-              transition={{ repeat: Infinity, duration: 2 }}
-              className="text-6xl mb-4"
+              animate={{ y: [0, -15, 0], rotate: [0, 5, 0] }}
+              transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+              className="inline-flex items-center justify-center w-28 h-28 mx-auto mb-4 rounded-full bg-[#F47A1F]/10 border border-[#F47A1F]/30 shadow-xl"
             >
-              ✈️
+              <motion.div
+                animate={{ y: [0, -8, 0], rotate: [0, 10, 0] }}
+                transition={{
+                  duration: 2,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                }}
+                className="text-[#F47A1F]"
+              >
+                <Plane className="w-12 h-12" />
+              </motion.div>
             </motion.div>
-            <h3 className="text-xl font-bold mb-2 text-primary">
+            <h3 className="text-2xl font-bold mb-2 text-primary">
               لا توجد رحلات حالياً
             </h3>
-            <p>تابعينا قريبًا، رحلات جديدة في الطريق 🌙</p>
+
+            <p className="text-[#B6BDD6] text-lg">
+              ✨ تابعينا قريبًا، رحلات جديدة في الطريق ✨
+            </p>
           </motion.div>
         )}
-
         {/* Trips Cards */}
         {!loading && trips.length > 0 && (
           <>

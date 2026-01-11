@@ -7,10 +7,18 @@ import { urlFor } from "@/sanity/lib/image";
 import { motion } from "framer-motion";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
-import { MapPin, Clock, Calendar, Users, Star as StarIcon, ArrowLeft } from "lucide-react";
+import {
+  MapPin,
+  Clock,
+  Calendar,
+  Users,
+  Star as StarIcon,
+  ArrowLeft,
+} from "lucide-react";
 import Link from "next/link";
 import { SectionDivider } from "@/components/ui/SectionDivider";
 import { StarParticle, generateStars } from "@/components/SpaceElements";
+import Image from "next/image";
 
 export default function TripDetails() {
   const { slug } = useParams();
@@ -19,10 +27,7 @@ export default function TripDetails() {
 
   useEffect(() => {
     client
-      .fetch(
-        `*[_type == "trip" && slug.current == $slug][0]`,
-        { slug }
-      )
+      .fetch(`*[_type == "trip" && slug.current == $slug][0]`, { slug })
       .then(setTrip);
   }, [slug]);
 
@@ -36,7 +41,7 @@ export default function TripDetails() {
         <motion.div
           animate={{ rotate: 360 }}
           transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
-          className="w-12 h-12 rounded-full border-4 border-t-transparent spinner-fire"
+          className="w-12 h-12 rounded-full border-4 border-t-transparent border-fire spinner-glow"
         />
       </div>
     );
@@ -70,11 +75,14 @@ export default function TripDetails() {
             animate={{ opacity: 1, x: 0 }}
             className="mb-6"
           >
-            <Link 
+            <Link
               href="/Trips"
-              className="inline-flex items-center gap-2 transition-colors text-secondary"
+              className="inline-flex items-center gap-2 transition-transform hover:translate-x-1 text-secondary"
             >
-              <ArrowLeft size={20} className="text-fire" />
+              <ArrowLeft
+                size={20}
+                className="text-fire transition-colors group-hover:text-ember"
+              />
               <span className="hover:text-fire">العودة للرحلات</span>
             </Link>
           </motion.div>
@@ -85,13 +93,14 @@ export default function TripDetails() {
             animate={{ opacity: 1, y: 0 }}
             className="relative h-[40vh] md:h-[50vh] rounded-3xl overflow-hidden mb-8"
           >
-            <img
+            <Image
               src={urlFor(trip.image).url()}
               alt={trip.title}
-              className="w-full h-full object-cover"
+              fill
+              className="object-cover rounded-3xl"
             />
             <div className="absolute inset-0 bg-gradient-image-overlay" />
-            
+
             {/* Rating Badge */}
             {trip.rating && (
               <div className="absolute top-4 right-4 px-3 py-1.5 rounded-full flex items-center gap-1.5 backdrop-blur-sm rating-badge">
@@ -118,7 +127,7 @@ export default function TripDetails() {
               <div className="flex flex-wrap gap-4">
                 {trip.location && (
                   <div className="flex items-center gap-2 text-secondary">
-                    <MapPin size={18} className="text-fire" />
+                    <MapPin size={18} className="text-fire" aria-label="الموقع"/>
                     <span>{trip.location}</span>
                   </div>
                 )}
@@ -149,7 +158,16 @@ export default function TripDetails() {
               className="space-y-6"
             >
               {/* Price Card */}
-              <div className="rounded-2xl p-6 backdrop-blur-sm sticky top-24 card-cosmic-light">
+              <motion.div
+                initial={{ y: 0 }}
+                animate={{ y: [0, -5, 0] }}
+                transition={{
+                  duration: 6,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                }}
+                className="rounded-2xl p-6 backdrop-blur-sm sticky top-24 card-cosmic-light"
+              >
                 <div className="text-center mb-6">
                   <span className="text-sm text-muted">السعر يبدأ من</span>
                   <p className="text-3xl font-bold text-fire">
@@ -170,12 +188,12 @@ export default function TripDetails() {
                 <p className="text-center text-sm mt-4 text-muted">
                   ✔ ضمان استرداد كامل قبل 7 أيام
                 </p>
-              </div>
+              </motion.div>
             </motion.div>
           </div>
         </div>
       </main>
-<SectionDivider />
+      <SectionDivider />
       <Footer />
     </div>
   );
