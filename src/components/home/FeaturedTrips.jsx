@@ -15,16 +15,21 @@ import {
   generateMeteors,
 } from "@/components/SpaceElements";
 
+const LIMIT = 6;
+
 export default function TripsSection() {
   const [trips, setTrips] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [visibleCount, setVisibleCount] = useState(LIMIT);
   const [stars, setStars] = useState([]);
   const [meteors, setMeteors] = useState([]);
 
   useEffect(() => {
     client
       .fetch(`*[_type == "trip"] | order(_createdAt desc)`)
-      .then(setTrips)
-      .catch(console.error);
+      .then((data) => setTrips(data))
+      .catch(console.error)
+      .finally(() => setLoading(false));
   }, []);
 
   useEffect(() => {
@@ -32,114 +37,153 @@ export default function TripsSection() {
     setMeteors(generateMeteors(4));
   }, []);
 
-  if (!trips.length) return null;
-
   return (
     <section className="relative py-8 sm:py-10 md:py-12 overflow-hidden">
-      {/* 🌌 خلفية فضائية غامقة */}
+      {/* Background */}
       <div className="absolute inset-0 bg-cosmic-space" />
 
-      {/* ✨ طبقة النجوم */}
+      {/* Stars */}
       <div className="absolute inset-0 pointer-events-none">
         {stars.map((star) => (
           <StarParticle key={star.id} star={star} />
         ))}
       </div>
 
-      {/* ☄️ طبقة الشهب */}
+      {/* Meteors */}
       <div className="absolute inset-0 pointer-events-none">
         {meteors.map((meteor) => (
           <ShootingStar key={meteor.id} meteor={meteor} />
         ))}
       </div>
 
-      {/* توهج في الزوايا */}
-      <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute -top-20 right-1/4 w-80 h-80 rounded-full blur-3xl opacity-20 glow-purple" />
-        <div className="absolute -bottom-20 left-1/4 w-72 h-72 rounded-full blur-3xl opacity-15 glow-fire" />
-      </div>
-      
       <div className="relative z-10 container mx-auto px-4 md:px-6 lg:px-16">
         {/* Header */}
-        <div className="text-center mb-6 sm:mb-8">
-          <h2 className="text-3xl md:text-4xl font-bold mb-2 sm:mb-3 text-primary">
+        <div className="text-center mb-8">
+          <h2 className="text-3xl md:text-4xl font-bold text-primary">
             رحلاتنا
           </h2>
-          <p className="text-base sm:text-lg max-w-2xl mx-auto text-secondary">
-            اختاري رحلتك المناسبة من تجاربنا المميزة
+          <p className="text-secondary">
+            اختار رحلتك المناسبة من تجاربنا المميزة
           </p>
         </div>
+        {/* Loading */}
+        {loading && (
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {[...Array(LIMIT)].map((_, i) => (
+              <div
+                key={i}
+                className="h-full rounded-3xl overflow-hidden bg-white/5 animate-pulse"
+              >
+                <div className="relative h-48 sm:h-56 bg-white/10" />
 
-        {/* Cards Grid */}
-        <div className="grid gap-4 sm:gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {trips.map((trip) => (
+                <div className="p-4 text-center">
+                  <div className="h-5 bg-white/20 rounded w-3/4 mx-auto mb-2"></div>
+                  <div className="h-3 bg-white/10 rounded w-1/2 mx-auto mb-1"></div>
+                  <div className="h-3 bg-white/10 rounded w-1/3 mx-auto mb-2"></div>
+                  <div className="h-12 bg-white/10 rounded mx-auto mb-2"></div>
+                  <div className="h-5 bg-white/20 rounded w-1/4 mx-auto"></div>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+
+        {/* Empty State */}
+        {!loading && trips.length === 0 && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="py-16 text-center text-muted"
+          >
             <motion.div
-              key={trip._id}
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
+              animate={{ y: [0, -8, 0] }}
+              transition={{ repeat: Infinity, duration: 2 }}
+              className="text-6xl mb-4"
             >
-              <Link href="/Trips">
-                <Card className="overflow-hidden rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-500 h-full group backdrop-blur-sm card-cosmic">
-                  {/* Image */}
-                  <div className="relative h-48 sm:h-56 overflow-hidden">
-                    <Image
-                      src={
-                        trip.image
-                          ? urlFor(trip.image).url()
-                          : "/trip.jpg"
-                      }
-                      alt={trip.title}
-                      fill
-                      className="object-cover transition-transform duration-700 group-hover:scale-110"
-                    />
-                    
-                    {/* Overlay gradient */}
-                    <div className="absolute inset-0 overlay-bottom" />
-
-                    {trip.rating && (
-                      <div className="absolute top-3 right-3 px-2.5 py-1 rounded-full flex items-center gap-1 shadow backdrop-blur-sm rating-badge">
-                        <Star className="w-4 h-4 fill-current star-rating" />
-                        <span className="text-sm font-bold text-primary">
-                          {trip.rating}
-                        </span>
-                      </div>
-                    )}
-                  </div>
-
-                  <CardContent className="p-4 text-center">
-                    <h3 className="text-lg sm:text-xl font-bold mb-1 text-primary">
-                      {trip.title}
-                    </h3>
-
-                    <div className="flex justify-center items-center gap-1 text-sm mb-0.5 text-secondary">
-                      <MapPin className="w-4 h-4 icon-ember" />
-                      <span>{trip.location}</span>
-                    </div>
-
-                    <div className="flex justify-center items-center gap-1 text-sm mb-2 text-secondary">
-                      <Clock className="w-4 h-4 icon-ember" />
-                      <span>{trip.duration}</span>
-                    </div>
-
-                    <p className="text-sm line-clamp-3 mb-2 text-muted">
-                      {trip.description}
-                    </p>
-
-                    <div className="pt-2 border-t border-fire-light">
-                      <span className="text-sm text-muted">
-                        السعر
-                      </span>
-                      <p className="text-xl font-bold price-text">
-                        {trip.price} ج.م
-                      </p>
-                    </div>
-                  </CardContent>
-                </Card>
-              </Link>
+              ✈️
             </motion.div>
-          ))}
-        </div>
+            <h3 className="text-xl font-bold mb-2 text-primary">
+              لا توجد رحلات حالياً
+            </h3>
+            <p>تابعينا قريبًا، رحلات جديدة في الطريق 🌙</p>
+          </motion.div>
+        )}
+
+        {/* Trips Cards */}
+        {!loading && trips.length > 0 && (
+          <>
+            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+              {trips.slice(0, visibleCount).map((trip) => (
+                <motion.div
+                  key={trip._id}
+                  initial={{ opacity: 0, y: 40 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                >
+                  <Link href="/Trips">
+                    <Card className="h-full rounded-3xl overflow-hidden card-cosmic">
+                      <div className="relative h-48 sm:h-56">
+                        <Image
+                          src={
+                            trip.image ? urlFor(trip.image).url() : "/trip.jpg"
+                          }
+                          alt={trip.title}
+                          fill
+                          className="object-cover transition-transform group-hover:scale-110"
+                        />
+                        <div className="absolute inset-0 overlay-bottom" />
+
+                        {trip.rating && (
+                          <div className="absolute top-3 right-3 px-2.5 py-1 rounded-full flex items-center gap-1 shadow backdrop-blur-sm rating-badge">
+                            <Star className="w-4 h-4 fill-current star-rating" />
+                            <span className="text-sm font-bold text-primary">
+                              {trip.rating}
+                            </span>
+                          </div>
+                        )}
+                      </div>
+
+                      <CardContent className="p-4 text-center">
+                        <h3 className="font-bold text-primary">{trip.title}</h3>
+
+                        <div className="flex justify-center gap-2 text-sm text-secondary">
+                          <span className="flex items-center gap-1">
+                            <MapPin className="w-4 h-4" />
+                            {trip.location}
+                          </span>
+                          <span className="flex items-center gap-1">
+                            <Clock className="w-4 h-4" />
+                            {trip.duration}
+                          </span>
+                        </div>
+
+                        <p className="text-sm line-clamp-3 text-muted my-2">
+                          {trip.description}
+                        </p>
+
+                        <p className="text-xl font-bold price-text">
+                          {trip.price} ج.م
+                        </p>
+                      </CardContent>
+                    </Card>
+                  </Link>
+                </motion.div>
+              ))}
+            </div>
+
+            {/* Load More */}
+            {visibleCount < trips.length && (
+              <div className="text-center mt-8">
+                <button
+                  onClick={() => setVisibleCount((prev) => prev + LIMIT)}
+                  className="px-6 py-2 rounded-full bg-primary text-white hover:opacity-90 transition"
+                >
+                  عرض المزيد
+                </button>
+              </div>
+            )}
+          </>
+        )}
       </div>
     </section>
   );
